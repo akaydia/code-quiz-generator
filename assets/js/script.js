@@ -1,5 +1,5 @@
 let quizEl = document.querySelector(".quiz-container");
-
+let mainEl = document.querySelector("main");
 const questions = [
     {
         question: "Commonly used data types DO NOT include:",
@@ -19,7 +19,10 @@ const questions = [
             { text: "square brackets", correct: false },
         ],
     },
+
+    
     // add more questions
+
 ];
 
 
@@ -27,7 +30,9 @@ const questions = [
 questions.forEach((question) => {
     // create a new div for the question and applies a "question" class to it
     let questionDiv = document.createElement("div");
+    let resultDiv = document.createElement("div");
     questionDiv.setAttribute("class", "question");
+    resultDiv.setAttribute("class", "result");
 
     // create a new h2 for the question text
     let questionText = document.createElement("h2");
@@ -47,12 +52,17 @@ questions.forEach((question) => {
             let selectedAnswer = event.target;
             // compare if selected answer was correct
             if (selectedAnswer.dataset.correct === "true") {
-                console.log("Correct!");
+                resultDiv.innerText = "correct !! :)";
+                resultDiv.setAttribute("class", "");
+                resultDiv.setAttribute("class", "correct");
             } else {
-                console.log("Wrong!");
+                resultDiv.innerText = "wrong !! lol";
+                resultDiv.setAttribute("class", "");
+                resultDiv.setAttribute("class", "wrong");
             }
         });
         questionDiv.appendChild(answerDiv);
     });
     quizEl.appendChild(questionDiv);
+    questionDiv.appendChild(resultDiv);
 }); // questions.forEach()
