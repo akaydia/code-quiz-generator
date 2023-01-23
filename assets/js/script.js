@@ -34,6 +34,8 @@ function moveToNextQuestion() {
     // check if the answer is clicked and if the quiz is completed before moving to the next question
     if (isAnswerClicked) {
         if (currentQuestionIndex < questions.length - 1) {
+            questionDivs[currentQuestionIndex].style.display = "none";
+            resultDivs[currentQuestionIndex].style.display = "none";
             currentQuestionIndex++;
             questionDivs[currentQuestionIndex].style.display = "block";
             resultDivs[currentQuestionIndex].style.display = "block";
@@ -45,7 +47,7 @@ function moveToNextQuestion() {
 } // moveToNextQuestion()
 
 startBtn.addEventListener("click", function () {
-    questions.forEach((question, index) => {
+    questions.forEach((question) => {
         // create a new div for the question and applies a "question" class to it
         let questionDiv = document.createElement("div");
         let resultDiv = document.createElement("div");
@@ -67,19 +69,19 @@ startBtn.addEventListener("click", function () {
             // adding eventlistener to elements in the div
             answerDiv.addEventListener("click", (event) => {
                 isAnswerClicked = true;
-                //get element that was clicked
+                // get element that was clicked
                 let selectedAnswer = event.target;
                 // compare if selected answer was correct
                 if (selectedAnswer.dataset.correct === "true") {
                     resultDiv.innerText = "correct !! :)";
                     resultDiv.setAttribute("class", "");
                     resultDiv.setAttribute("class", "correct");
-                    moveToNextQuestion();
+                    setTimeout(moveToNextQuestion, 1000);
                 } else {
                     resultDiv.innerText = "wrong !! lol";
                     resultDiv.setAttribute("class", "");
                     resultDiv.setAttribute("class", "wrong");
-                    moveToNextQuestion();
+                    setTimeout(moveToNextQuestion, 1000);
                 }
             });
             questionDiv.appendChild(answerDiv);
@@ -88,6 +90,7 @@ startBtn.addEventListener("click", function () {
         questionDivs.push(questionDiv);
         resultDivs.push(resultDiv);
 
+        // displays the question and result
         quizEl.appendChild(questionDiv);
         questionDiv.appendChild(resultDiv);
 
