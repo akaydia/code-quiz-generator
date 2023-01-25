@@ -1,3 +1,4 @@
+// variables
 let quizEl = document.querySelector(".quiz-container");
 let startBtn = document.getElementById("start-btn");
 let timerEl = document.querySelector(".timer-count");
@@ -5,7 +6,6 @@ let initialsInput = document.getElementById("initials-input");
 let highscoresBtn = document.getElementById("highscores-btn");
 let highscoresDiv = document.getElementById("highscores-div");
 let highscoresList = document.getElementById("highscores-list");
-
 let currentQuestionIndex = 0;
 let questionDivs = [];
 let resultDivs = [];
@@ -81,11 +81,11 @@ const questions = [
             { text: "property", correct: true },
         ],
 
-
         // add more questions
     }
 ];
 
+// timer 
 function startTimer() {
     timerInterval = setInterval(() => {
         timer--;
@@ -99,8 +99,10 @@ function startTimer() {
     }, 1000);
 }
 
+// moves to next question if a question is clicked, it will hide the previous question and display the next question.
+// if there is no more questions, the timer is stopped and the game is ended, and the ability to save your score is apepnded
 function moveToNextQuestion() {
-    // check if the answer is clicked and if the quiz is completed before moving to the next question
+    
     if (isAnswerClicked) {
         if (currentQuestionIndex < questions.length) {
             questionDivs[currentQuestionIndex].style.display = "none";
@@ -113,15 +115,14 @@ function moveToNextQuestion() {
             gameOver = true;
             saveScore();
         }
-        if (timer > 0) {
-            timer -= 5;
-        }
+
         isAnswerClicked = false;
     }
 } // moveToNextQuestion()
 
+// dynamically creates a message at the end of the quiz and allows for the user to input their initials to save their highscore
+// saveScore() also creates a startagain button that allows the user to do the quiz over again.
 function saveScore() {
-
     // score message
     let scoreMessage = document.createElement("div");
     scoreMessage.innerText = "You scored " + score + " out of " + questions.length;
@@ -191,6 +192,8 @@ function saveScore() {
     });
 } // saveScore()
 
+// start button takes in the questions array, and appends each question into their own div and assigns their dataset whether or not it was the correct or incorrect answer
+
 startBtn.addEventListener("click", function () {
     startTimer();
     startBtn.remove();
@@ -229,6 +232,9 @@ startBtn.addEventListener("click", function () {
                     resultDiv.innerText = "wrong !! :(";
                     resultDiv.setAttribute("class", "");
                     resultDiv.setAttribute("class", "wrong");
+                    if (timer > 0) {
+                    timer -= 5;
+                    }
                     setTimeout(moveToNextQuestion, 500);
                 }
             });
@@ -261,6 +267,9 @@ startBtn.addEventListener("click", function () {
 
 }); // startBtn.addEventListener("click") 
 
+// adds a highscore button that displays if clicked on, or hidden if clicked on again.
+// clicking on the highscore button will also display the clear button and highscore header, clicking it again will hide the elements.
+// dynamically creates the html elements
 highscoresBtn.addEventListener("click", function () {
     let highscores = JSON.parse(localStorage.getItem("highscores")) || [];
 
