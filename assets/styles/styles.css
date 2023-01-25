@@ -1,13 +1,97 @@
 body {
-    font-family: "Comic Sans MS";
+  font-family: "Comic Sans MS";
+  margin: 20px;
 }
 
 .correct {
-    font-size: 25px;
-    color: green;
+  font-size: 25px;
+  color: green;
 }
 
 .wrong {
-    font-size: 25px;
-    color: red;
+  font-size: 25px;
+  color: red;
+}
+
+#highscores-div {
+  margin: auto;
+  width: 50%;
+  text-align: center;
+}
+
+.timer-count {
+  font-size: 20px;
+  font-weight: bolder;
+  color: lightcoral;
+}
+
+#start-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+#highscores-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+div#highscores-div h2 {
+    color: #A7C7E7;
+    font-weight: bolder;
+}
+
+#clear-highscores-btn {
+    position: absolute;
+    top: 80px;
+    right: 20px;
+}
+
+.question {
+  margin: auto;
+  width: 50%;
+  text-align: center;
+}
+
+.answer {
+  margin: auto;
+  width: 50%;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.result {
+  margin: auto;
+  width: 50%;
+  text-align: center;
+}
+
+div.question h2 {
+  color: #f06868;
+}
+
+div.answer {
+  border: 1px solid #b44c4f;
+}
+
+div.answer:hover {
+  background-color: lightcoral;
+  cursor: pointer;
+}
+
+ul#highscores-list {
+  list-style: none;
+}
+
+#scoreMessage {
+  color: #f06868;
+  margin: 10px;
+  padding-right: 30px;
+}
+
+.quiz-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

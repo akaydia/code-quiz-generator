@@ -14,6 +14,7 @@ let timer = 60;
 let timerInterval;
 let score = 0;
 let gameOver = false;
+let highscoresDisplayed = false;
 
 const questions = [
     {
@@ -88,7 +89,7 @@ const questions = [
 function startTimer() {
     timerInterval = setInterval(() => {
         timer--;
-        timerEl.innerHTML = timer;
+        timerEl.innerHTML = timer + ' seconds left..';
         if (timer <= 0 || currentQuestionIndex === questions.length) {
             clearInterval(timerInterval);
             gameOver = true;
@@ -120,6 +121,17 @@ function moveToNextQuestion() {
 } // moveToNextQuestion()
 
 function saveScore() {
+
+    // score message
+    let scoreMessage = document.createElement("div");
+    scoreMessage.innerText = "You scored " + score + " out of " + questions.length;
+    if (score >= questions.length / 2) {
+        scoreMessage.innerText += " Great Job!";
+    } else {
+        scoreMessage.innerText += "\n Try again next time!";
+    }
+    quizEl.appendChild(scoreMessage);
+
     // create input element
     initialsInput = document.createElement("input");
     initialsInput.setAttribute("id", "initials-input");
@@ -154,6 +166,7 @@ function saveScore() {
     startAgainBtn.innerText = "Start again";
     startAgainBtn.setAttribute("id", "start-again-btn");
     quizEl.appendChild(startAgainBtn);
+
 
     // add an event listener to the start again button
     startAgainBtn.addEventListener("click", function () {
@@ -213,15 +226,16 @@ startBtn.addEventListener("click", function () {
                     score++;
                     setTimeout(moveToNextQuestion, 500);
                 } else {
-                    resultDiv.innerText = "wrong !! lol";
+                    resultDiv.innerText = "wrong !! :(";
                     resultDiv.setAttribute("class", "");
                     resultDiv.setAttribute("class", "wrong");
                     setTimeout(moveToNextQuestion, 500);
                 }
             });
 
-            if (currentQuestionIndex === questions.length || timer <= 0) {
+            if (currentQuestionIndex === questions.length - 1 || timer <= 0) {
                 gameOver = true;
+                clearInterval(timerInterval);
                 saveScore();
             }
             questionDiv.appendChild(answerDiv);
@@ -247,18 +261,29 @@ startBtn.addEventListener("click", function () {
 
 }); // startBtn.addEventListener("click") 
 
-highscoresBtn.addEventListener("click", function() {
+highscoresBtn.addEventListener("click", function () {
     let highscores = JSON.parse(localStorage.getItem("highscores")) || [];
 
     // toggle the visibility of the highscores div
     if (highscoresDiv.style.display === "none") {
         highscoresDiv.style.display = "block";
+
+        let clearHighscoresBtn = document.getElementById("clear-highscores-btn");
+        if (!clearHighscoresBtn) {
+            // create the clear highscores button
+            clearHighscoresBtn = document.createElement("button");
+            clearHighscoresBtn.innerText = "Clear Highscores";
+            clearHighscoresBtn.setAttribute("id", "clear-highscores-btn");
+            highscoresDiv.appendChild(clearHighscoresBtn);
+            clearHighscoresBtn.style.display = "block";
+            clearHighscoresBtn.addEventListener("click", function () {
+                localStorage.removeItem("highscores");
+            });
+        }
     } else {
         highscoresDiv.style.display = "none";
+        clearHighscoresBtn.style.display = "none";
     }
-
-    // clear the highscores list
-    highscoresList.innerHTML = "";
 
     highscores.forEach((highscore) => {
         let highscoreLi = document.createElement("li");
@@ -266,3 +291,5 @@ highscoresBtn.addEventListener("click", function() {
         highscoresList.appendChild(highscoreLi);
     });
 });
+
+
