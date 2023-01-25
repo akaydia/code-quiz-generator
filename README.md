@@ -5,7 +5,7 @@ Created a quiz generator that generates JavaScript related questions. You may al
 
 
 ## Screenshot
-![image of website](Assets/code-quiz-generator-demo.png)
+![image of website](assets/code-quiz-generator-demo.png)
 
 ## Link to Deploy
 [Website](https://akaydia.github.io/code-quiz-generator/)
